@@ -11,23 +11,24 @@
 
       <div class="col-md-9 col-xs-12" style="overflow: auto;min-height: 500px;">
         <q-tabs align="left" v-model="tab" class="primary">
-          <q-tab name="mails" label="Habits (5)"> </q-tab>
-          <q-tab name="alarms" label="Followers (6)"> </q-tab>
-          <q-tab name="movies" label="Following (7)"> </q-tab>
+          <q-tab name="habits" label="Habits (5)"> </q-tab>
+          <q-tab name="followers" label="Followers (6)"> </q-tab>
+          <q-tab name="following" label="Following (7)"> </q-tab>
         </q-tabs>
         <q-separator class="q-mb-md" />
 
         <div class="row">
           <div
-            v-for="card in 5"
+            v-for="card in 4"
             v-bind:key="card"
             class="col-12 col-md-6 col-lg-6 q-pl-xs q-pr-xs"
           >
-            <habit-card
-              name="Hacer Ejercicio"
-              description="Minimo 30 minutos al dia"
-            />
+            <habit-card name="Sleep Early" description="at 10 pm" />
           </div>
+        </div>
+
+        <div class="q-pa-lg flex flex-center">
+          <q-pagination v-model="current" :max="5"> </q-pagination>
         </div>
 
         <people-list title="Followers" />
@@ -40,9 +41,8 @@
 export default {
   data() {
     return {
-      tab: "mails",
-      lorem:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      tab: "habits",
+      current: 1
     };
   },
   components: {

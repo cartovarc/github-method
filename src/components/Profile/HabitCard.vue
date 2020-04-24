@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered class="habit-card bg-grey-1 q-mb-sm">
+  <q-card flat bordered class="habit-card q-mb-sm">
     <q-card-section>
       <div class="row items-center no-wrap">
         <div class="col">
@@ -14,10 +14,10 @@
             <q-menu cover auto-close>
               <q-list>
                 <q-item clickable>
-                  <q-item-section>Editar</q-item-section>
+                  <q-item-section> Edit </q-item-section>
                 </q-item>
                 <q-item clickable>
-                  <q-item-section>Borrar</q-item-section>
+                  <q-item-section>Delete</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -29,14 +29,41 @@
     <q-separator />
 
     <q-card-actions>
-      <q-btn class="full-width" flat>¿?</q-btn>
+      <div class="q-gutter-sm">
+        <q-radio
+          keep-color
+          v-model="color"
+          val="bad"
+          label="Bad"
+          color="grey"
+        />
+        <q-radio
+          keep-color
+          v-model="color"
+          val="good"
+          label="Good"
+          color="green"
+        />
+        <q-radio
+          keep-color
+          v-model="color"
+          val="excellent"
+          label="Excellent"
+          color="green-10"
+        />
+      </div>
     </q-card-actions>
   </q-card>
 </template>
 
 <script>
 export default {
-  props: ["name", "description"]
+  props: ["name", "description"],
+  data() {
+    return {
+      color: "bad"
+    };
+  }
 };
 </script>
 
