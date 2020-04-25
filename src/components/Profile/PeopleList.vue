@@ -1,5 +1,5 @@
 <template>
-  <q-list bordered separator class="q-mt-md q-mb-md">
+  <q-list bordered separator class="q-mb-md">
     <q-item-label header>{{ title }}</q-item-label>
 
     <q-separator />

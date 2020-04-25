@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div
-      v-for="card in 4"
+      v-for="card in 2"
       v-bind:key="card"
       class="col-12 col-md-6 col-lg-6 q-pl-xs q-pr-xs"
     >

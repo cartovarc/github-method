@@ -21,9 +21,16 @@
         >
           <profile-tabs />
 
-          <q-separator class="q-mb-md" />
+          <div class="col-12 flex">
+            <q-space />
+            <q-btn size="sm" color="green q-mb-md" icon="book" label="New" />
+          </div>
 
           <router-view />
+
+          <q-separator class="q-mb-md" />
+
+          <green-grid style="max-width: 100% " />
         </div>
       </div>
     </q-page-container>
@@ -38,20 +45,21 @@ export default {
   components: {
     "my-toolbar": require("src/components/Header/MyToolbar.vue").default,
     "user-card": require("src/components/Profile/UserCard.vue").default,
-    "profile-tabs": require("src/components/Profile/ProfileTabs.vue").default
-    //"green-grid": require("src/components/GreenGrid.vue").default
+    "profile-tabs": require("src/components/Profile/ProfileTabs.vue").default,
+    "green-grid": require("src/components/GreenGrid.vue").default
   }
 };
 </script>
 
 <style lang="sass">
+
 .my-container
-  @media (min-width: $breakpoint-md-min)
+  @media (min-width: $breakpoint-sm-min)
     margin-left: 80px
     margin-right: 80px
     margin-top: 10px
 
-  @media (max-width: $breakpoint-md-max)
+  @media (max-width: $breakpoint-sm-max)
     margin-left: 10px
     margin-right: 10px
     margin-top: 10px
