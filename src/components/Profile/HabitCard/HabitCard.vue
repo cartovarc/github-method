@@ -21,7 +21,7 @@
                 <q-item clickable>
                   <q-item-section> Edit </q-item-section>
                 </q-item>
-                <q-item clickable>
+                <q-item clickable @click="$emit('delete')">
                   <q-item-section>Delete</q-item-section>
                 </q-item>
               </q-list>
@@ -63,7 +63,7 @@
 
 <script>
 export default {
-  props: ["name"],
+  props: ["name", "id"],
   data() {
     return {
       color: "bad"

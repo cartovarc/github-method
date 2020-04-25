@@ -2,14 +2,14 @@
   <div class="row">
     <template v-if="habitsDownloaded">
       <div
-        v-for="habit in habits"
-        v-bind:key="habit.id"
+        v-for="(habit, key) in habits"
+        v-bind:key="key"
         class="col-12 col-md-6 col-lg-6 q-pl-xs q-pr-xs"
       >
-        <habit-card :name="habit.name" />
+        <habit-card @delete="prompToDelete(key)" :name="habit.name" />
       </div>
 
-      <div class="q-pa-lg flex flex-center">
+      <div class="q-pa-lg flex flex-center col-12">
         <q-pagination color="primary" v-model="current" :max="5">
         </q-pagination>
       </div>
@@ -37,7 +37,19 @@ export default {
     };
   },
   methods: {
-    ...mapActions("habits", ["testGetData"])
+    ...mapActions("habits", ["testGetData", "deleteHabit"]),
+    prompToDelete(id) {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Really delete?",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          this.deleteHabit(id);
+        });
+    }
   },
   components: {
     "habit-card": require("src/components/Profile/HabitCard/HabitCard.vue")

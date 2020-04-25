@@ -14,6 +14,12 @@ const mutations = {
   },
   addHabit(state, payload) {
     Vue.set(state.habits, payload.id, payload.habit);
+  },
+  updateHabit(state, payload) {
+    Object.assign(state.habits[payload.id], payload.updates);
+  },
+  deleteHabit(state, id) {
+    Vue.delete(state.habits, id);
   }
 };
 
@@ -48,7 +54,25 @@ const actions = {
       };
       commit("addHabit", payload);
     });
+
+    // child changed
+    userHabits.on("child_changed", snapshot => {
+      let habit = snapshot.val();
+      let payload = {
+        id: snapshot.key,
+        updates: habit
+      };
+      commit("updateHabit", payload);
+    });
+
+    // child removed
+    userHabits.on("child_removed", snapshot => {
+      let habitId = snapshot.key;
+      commit("deleteHabit", habitId);
+      Notify.create("Habit deleted");
+    });
   },
+
   addHabit({ dispatch }, habit) {
     let id = uid();
     let payload = {
@@ -65,6 +89,20 @@ const actions = {
         showErrorMessage(error.message);
       } else {
         Notify.create("Habit added");
+      }
+    });
+  },
+
+  deleteHabit({ dispatch }, id) {
+    dispatch("fbDeleteHabit", id);
+  },
+
+  fbDeleteHabit({}, habitId) {
+    let uid = 1234; //firebaseAuth.currentUser.uid;
+    let habitRef = firebaseDb.ref("habits/" + uid + "/" + habitId);
+    habitRef.remove(error => {
+      if (error) {
+        showErrorMessage(error.message);
       }
     });
   }
