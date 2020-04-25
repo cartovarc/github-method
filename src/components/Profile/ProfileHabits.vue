@@ -56,7 +56,6 @@ export default {
       .default
   },
   mounted() {
-    console.log("HELOO");
     this.testGetData();
   }
 };
