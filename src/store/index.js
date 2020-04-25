@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import habits from "./store-habits";
+import profile from "./store-profile";
 
 Vue.use(Vuex);
 
@@ -17,7 +18,8 @@ Vue.use(Vuex);
 export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      habits
+      habits,
+      profile
     },
 
     // enable strict mode (adds overhead!)

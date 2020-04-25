@@ -3,9 +3,7 @@
     <template v-slot:label>
       <div class="row items-center no-wrap">
         <q-avatar size="sm" rounded>
-          <img
-            src="https://avatars2.githubusercontent.com/u/26529546?s=460&u=38dd5f593b5ba678529e3093395055392d2918ff&v=4"
-          />
+          <img :src="imageURL" />
         </q-avatar>
       </div>
     </template>
@@ -19,11 +17,25 @@
       <q-separator vertical inset class="q-mx-lg" />
 
       <div class="column items-center">
-        <q-avatar size="72px">
-          <img
-            src="https://avatars2.githubusercontent.com/u/26529546?s=460&u=38dd5f593b5ba678529e3093395055392d2918ff&v=4"
-          />
+        <q-avatar size="96px">
+          <img :src="imageURL" />
         </q-avatar>
+
+        <q-btn-dropdown size="sm" color="primary" label="Edit">
+          <q-list>
+            <q-item clickable v-close-popup>
+              <q-item-section>
+                <q-item-label>Upload a photo</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup>
+              <q-item-section>
+                <q-item-label>Remove photo</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
 
         <div class="text-subtitle1 q-mt-md q-mb-xs">cartovarc</div>
 
@@ -34,12 +46,23 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
+  computed: {
+    ...mapState("profile", ["imageURL"])
+  },
   data() {
     return {
       privateHabits: true,
       allowFollowers: true
     };
+  },
+  methods: {
+    ...mapActions("profile", ["testGetData"])
+  },
+  mounted() {
+    this.testGetData();
   }
 };
 </script>

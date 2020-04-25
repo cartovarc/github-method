@@ -11,7 +11,7 @@
             class="q-ma-md"
             fullName="Carlos Tovar"
             username="cartovarc"
-            imgURL="https://avatars2.githubusercontent.com/u/26529546?s=460&u=38dd5f593b5ba678529e3093395055392d2918ff&v=4"
+            :imgURL="imageURL"
           />
         </div>
 
@@ -49,9 +49,13 @@
 
 <script>
 import EssentialLink from "components/EssentialLink";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "MainLayout",
+  computed: {
+    ...mapState("profile", ["imageURL"])
+  },
   data() {
     return {
       showAddHabit: false
@@ -64,7 +68,12 @@ export default {
     "green-grid": require("src/components/GreenGrid.vue").default,
     "add-habit": require("components/Habit/Modals/AddHabit.vue").default
   },
+  methods: {
+    ...mapActions("profile", ["testGetData"])
+  },
   mounted() {
+    this.testGetData();
+
     this.$root.$on("showAddHabit", () => {
       this.showAddHabit = true;
     });
