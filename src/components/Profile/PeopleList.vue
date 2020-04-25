@@ -1,7 +1,8 @@
 <template>
-  <q-list class="q-mt-md">
-    <q-separator />
+  <q-list bordered separator class="q-mt-md q-mb-md">
     <q-item-label header>{{ title }}</q-item-label>
+
+    <q-separator />
 
     <q-item v-for="contact in followers" :key="contact.id" class="q-mb-sm">
       <q-item-section avatar>
@@ -44,12 +45,12 @@ const followers = [
 ];
 
 export default {
+  props: ["title"],
   data() {
     return {
       followers
     };
-  },
-  props: ["title"]
+  }
 };
 </script>
 

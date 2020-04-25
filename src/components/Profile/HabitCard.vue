@@ -2,14 +2,19 @@
   <q-card flat bordered class="habit-card q-mb-sm">
     <q-card-section>
       <div class="row items-center no-wrap">
-        <div class="col">
-          <div class="text-h6">{{ name }}</div>
+        <div class="col-7">
+          <div class="text-subtitle1">{{ name }}</div>
           <div class="text-subtitle2">
             {{ description }}
           </div>
         </div>
 
-        <div class="col-auto">
+        <div class="col-4 text-right">
+          <bar-graph />
+        </div>
+
+        <div class="col-1">
+          <q-space />
           <q-btn color="grey-7" round flat icon="more_vert">
             <q-menu cover auto-close>
               <q-list>
@@ -63,6 +68,9 @@ export default {
     return {
       color: "bad"
     };
+  },
+  components: {
+    "bar-graph": require("src/components/Profile/HabitCard/BarGraph").default
   }
 };
 </script>

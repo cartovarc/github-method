@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md flex flex-center">
-    <q-card class="my-card">
+  <div class="q-pa-none q-ma-none">
+    <q-card v-if="$q.screen.gt.sm" flat bordered class="my-card-one q-ma-none">
       <q-img :src="imgURL" :ratio="1" />
       <q-card-section>
         <div class="text-h6">{{ fullName }}</div>
@@ -16,6 +16,17 @@
         />
       </q-card-section>
     </q-card>
+
+    <q-card v-else class="my-card-two" flat bordered>
+      <q-card-section horizontal>
+        <q-img class="my-image-two" :src="imgURL" :ratio="1" />
+        <q-card-section>
+          <div class="text-h6">{{ fullName }}</div>
+          <div class="text-subtitle2 q-mb-md">{{ username }}</div>
+          <q-btn color="white" text-color="black" label="Follow" />
+        </q-card-section>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -26,7 +37,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.my-card
+.my-card-one
   width: 100%
   max-width: 300px
+
+.my-card-two
+  width: 100%
+
+.my-image-two
+  max-width: 150px
+  max-height: 150px
 </style>
