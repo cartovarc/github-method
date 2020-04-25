@@ -17,7 +17,12 @@
 
     <q-space />
 
-    <q-btn flat class="self-stretch" icon="add" />
+    <q-btn
+      @click="$emit('showAddHabit')"
+      flat
+      class="self-stretch"
+      icon="add"
+    />
 
     <dropdown-settings v-if="loggedIn" />
 

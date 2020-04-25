@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-center q-pa-none">
+  <div class="flex flex-center q-pa-none" v-if="habitsDownloaded">
     <svg class="squares" width="900" height="200">
       <g v-for="j in 7" v-bind:key="'c' + j">
         <rect
@@ -17,7 +17,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
+  computed: {
+    ...mapState("habits", ["habitsDownloaded"])
+  },
   methods: {
     randomColor() {
       const level = Math.floor(Math.random() * 4);

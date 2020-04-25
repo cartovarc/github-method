@@ -37,3 +37,9 @@ firebase.json
 .firebaserc
 .firebase
 .firebase-debug.log
+credentials/firebase-config.js
+
+# Locks
+package-lock.json
+yarn.lock
+

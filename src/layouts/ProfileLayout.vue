@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh LpR fFf">
     <q-header>
-      <my-toolbar />
+      <my-toolbar @showAddHabit="showAddHabit = true" />
     </q-header>
 
     <q-page-container class="my-container ">
@@ -19,11 +19,21 @@
           class="col-md-9 col-xs-12"
           style="overflow: auto;min-height: 500px;"
         >
-          <profile-tabs />
+          <profile-tabs class="q-mb-md" />
 
           <div class="col-12 flex">
             <q-space />
-            <q-btn size="sm" color="green q-mb-md" icon="book" label="New" />
+            <q-btn
+              @click="showAddHabit = true"
+              unelevated=""
+              size="sm"
+              color="green q-mb-md"
+              icon="book"
+              label="New"
+            />
+            <q-dialog v-model="showAddHabit">
+              <add-habit @close="showAddHabit = false" />
+            </q-dialog>
           </div>
 
           <router-view />
@@ -42,11 +52,22 @@ import EssentialLink from "components/EssentialLink";
 
 export default {
   name: "MainLayout",
+  data() {
+    return {
+      showAddHabit: false
+    };
+  },
   components: {
     "my-toolbar": require("src/components/Header/MyToolbar.vue").default,
     "user-card": require("src/components/Profile/UserCard.vue").default,
     "profile-tabs": require("src/components/Profile/ProfileTabs.vue").default,
-    "green-grid": require("src/components/GreenGrid.vue").default
+    "green-grid": require("src/components/GreenGrid.vue").default,
+    "add-habit": require("components/Habit/Modals/AddHabit.vue").default
+  },
+  mounted() {
+    this.$root.$on("showAddHabit", () => {
+      this.showAddHabit = true;
+    });
   }
 };
 </script>

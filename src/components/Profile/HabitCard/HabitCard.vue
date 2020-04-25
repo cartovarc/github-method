@@ -5,7 +5,7 @@
         <div class="col-7">
           <div class="text-subtitle1">{{ name }}</div>
           <div class="text-subtitle2">
-            {{ description }}
+            How did you handle your habit today?
           </div>
         </div>
 
@@ -63,7 +63,7 @@
 
 <script>
 export default {
-  props: ["name", "description"],
+  props: ["name"],
   data() {
     return {
       color: "bad"
