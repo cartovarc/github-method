@@ -37,7 +37,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("habits", ["testGetData", "deleteHabit"]),
+    ...mapActions("habits", ["deleteHabit"]),
     prompToDelete(id) {
       this.$q
         .dialog({
@@ -54,9 +54,6 @@ export default {
   components: {
     "habit-card": require("src/components/Profile/HabitCard/HabitCard.vue")
       .default
-  },
-  mounted() {
-    this.testGetData();
   }
 };
 </script>

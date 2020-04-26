@@ -20,18 +20,18 @@ const mutations = {
   },
   deleteHabit(state, id) {
     Vue.delete(state.habits, id);
+  },
+  clearHabits(state) {
+    state.habits = {};
   }
 };
 
 const actions = {
-  testGetData({ dispatch }) {
-    dispatch("fbReadData");
-  },
   setHabitsDownloaded({ commit }, value) {
     commit("setHabitsDownloaded", value);
   },
   fbReadData({ commit }) {
-    let uid = 1234; //firebaseAuth.currentUser.uid;
+    let uid = firebaseAuth.currentUser.uid;
     let userHabits = firebaseDb.ref("habits/" + uid);
 
     // check initial data
@@ -82,7 +82,7 @@ const actions = {
     dispatch("fbAddHabit", payload);
   },
   fbAddHabit({}, payload) {
-    let uid = 1234; // firebaseAuth.currentUser.uid;
+    let uid = firebaseAuth.currentUser.uid;
     let habitRef = firebaseDb.ref("habits/" + uid + "/" + payload.id);
     habitRef.set(payload.habit, error => {
       if (error) {
@@ -98,7 +98,7 @@ const actions = {
   },
 
   fbDeleteHabit({}, habitId) {
-    let uid = 1234; //firebaseAuth.currentUser.uid;
+    let uid = firebaseAuth.currentUser.uid;
     let habitRef = firebaseDb.ref("habits/" + uid + "/" + habitId);
     habitRef.remove(error => {
       if (error) {

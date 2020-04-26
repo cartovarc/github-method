@@ -18,6 +18,7 @@
     <q-space />
 
     <q-btn
+      v-if="loggedIn"
       @click="$emit('showAddHabit')"
       flat
       class="self-stretch"
@@ -25,23 +26,15 @@
     />
 
     <dropdown-settings v-if="loggedIn" />
-
-    <q-btn
-      v-else
-      class="absolute-right"
-      icon-right="account_circle"
-      label="Logout"
-      flat
-    />
   </q-toolbar>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  data() {
-    return {
-      loggedIn: true
-    };
+  computed: {
+    ...mapState("auth", ["loggedIn"])
   },
   components: {
     "dropdown-settings": require("src/components/Header/DropdownSettings.vue")

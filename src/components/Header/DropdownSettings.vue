@@ -3,7 +3,7 @@
     <template v-slot:label>
       <div class="row items-center no-wrap">
         <q-avatar size="sm" rounded>
-          <img :src="imageURL" />
+          <img :src="getImgURL()" />
         </q-avatar>
       </div>
     </template>
@@ -18,7 +18,7 @@
 
       <div class="column items-center">
         <q-avatar size="96px">
-          <img :src="imageURL" />
+          <img :src="getImgURL()" />
         </q-avatar>
 
         <q-btn class="full-width q-mt-xs" size="sm" id="pick-avatar"
@@ -39,7 +39,14 @@
 
         <div class="text-subtitle1 q-mt-md q-mb-xs">cartovarc</div>
 
-        <q-btn color="primary" label="Logout" push size="sm" v-close-popup />
+        <q-btn
+          @click="logout"
+          color="primary"
+          label="Logout"
+          push
+          size="sm"
+          v-close-popup
+        />
       </div>
     </div>
   </q-btn-dropdown>
@@ -63,7 +70,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions("profile", ["testGetData", "uploadImage", "removeImage"]),
+    ...mapActions("profile", ["uploadImage", "removeImage"]),
+    ...mapActions("auth", ["logoutUser"]),
     cropperHandler(cropper) {
       let base64Image = cropper
         .getCroppedCanvas()
@@ -75,13 +83,20 @@ export default {
     },
     showLoading(useless) {
       Loading.show();
+    },
+    logout() {
+      this.logoutUser();
+    },
+    getImgURL() {
+      if (this.imageURL) {
+        return this.imageURL;
+      } else {
+        return "statics/default_avatar.png";
+      }
     }
   },
   components: {
     AvatarCropper
-  },
-  mounted() {
-    this.testGetData();
   }
 };
 </script>

@@ -68,12 +68,8 @@ export default {
     "green-grid": require("src/components/GreenGrid.vue").default,
     "add-habit": require("components/Habit/Modals/AddHabit.vue").default
   },
-  methods: {
-    ...mapActions("profile", ["testGetData"])
-  },
+  methods: {},
   mounted() {
-    this.testGetData();
-
     this.$root.$on("showAddHabit", () => {
       this.showAddHabit = true;
     });

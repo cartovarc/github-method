@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-none q-ma-none">
     <q-card v-if="$q.screen.gt.sm" flat bordered class="my-card-one q-ma-none">
-      <q-img :src="imgURL" :ratio="1" />
+      <q-img :src="getImgURL()" :ratio="1" />
       <q-card-section>
         <div class="text-h6">{{ fullName }}</div>
         <div class="text-subtitle2">{{ username }}</div>
@@ -19,7 +19,7 @@
 
     <q-card v-else class="my-card-two" flat bordered>
       <q-card-section horizontal>
-        <q-img class="my-image-two" :src="imgURL" :ratio="1" />
+        <q-img class="my-image-two" :src="getImgURL()" :ratio="1" />
         <q-card-section>
           <div class="text-h6">{{ fullName }}</div>
           <div class="text-subtitle2 q-mb-md">{{ username }}</div>
@@ -32,7 +32,16 @@
 
 <script>
 export default {
-  props: ["fullName", "username", "imgURL"]
+  props: ["fullName", "username", "imgURL"],
+  methods: {
+    getImgURL() {
+      if (this.imgURL) {
+        return this.imgURL;
+      } else {
+        return "statics/default_avatar.png";
+      }
+    }
+  }
 };
 </script>
 

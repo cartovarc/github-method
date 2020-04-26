@@ -1,4 +1,4 @@
-import { firebaseStorage, firebaseDb } from "boot/firebase";
+import { firebaseStorage, firebaseDb, firebaseAuth } from "boot/firebase";
 import { Loading, Notify } from "quasar";
 
 const state = {
@@ -12,14 +12,11 @@ const mutations = {
 };
 
 const actions = {
-  testGetData({ dispatch }) {
-    dispatch("fbReadData");
-  },
   setHabitsDownloaded({ commit }, value) {
     commit("setHabitsDownloaded", value);
   },
   fbReadData({ commit }) {
-    let uid = 1234; //firebaseAuth.currentUser.uid;
+    let uid = firebaseAuth.currentUser.uid;
     let imageUrlRef = firebaseDb.ref("profile/" + uid + "/imageURL");
 
     // value
@@ -29,7 +26,7 @@ const actions = {
     });
   },
   uploadImage({ dispatch }, base64Image) {
-    let uid = 1234;
+    let uid = firebaseAuth.currentUser.uid;
     let imageName = uid + ".png";
     let storageRef = firebaseStorage.ref().child(imageName);
     storageRef.putString(base64Image, "data_url").then(function(snapshot) {
@@ -44,7 +41,7 @@ const actions = {
   },
 
   removeImage({ dispatch }) {
-    let uid = 1234;
+    let uid = firebaseAuth.currentUser.uid;
     let payload = {
       imageURL: "statics/default_avatar.png",
       uid: uid

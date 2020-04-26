@@ -16,6 +16,16 @@ const routes = [
         component: () => import("pages/Following.vue")
       }
     ]
+  },
+  {
+    path: "/",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "/auth",
+        component: () => import("pages/Auth.vue")
+      }
+    ]
   }
 ];
 
