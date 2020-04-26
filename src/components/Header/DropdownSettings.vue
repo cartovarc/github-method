@@ -21,21 +21,21 @@
           <img :src="imageURL" />
         </q-avatar>
 
-        <q-btn-dropdown size="sm" color="primary" label="Edit">
-          <q-list>
-            <q-item clickable v-close-popup>
-              <q-item-section>
-                <q-item-label>Upload a photo</q-item-label>
-              </q-item-section>
-            </q-item>
+        <q-btn class="full-width q-mt-xs" size="sm" id="pick-avatar"
+          >Select an image</q-btn
+        >
 
-            <q-item clickable v-close-popup>
-              <q-item-section>
-                <q-item-label>Remove photo</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
+        <img v-if="userAvatar" :src="userAvatar" />
+        <avatar-cropper
+          trigger="#pick-avatar"
+          :labels="labels"
+          @submit="showLoading"
+          :upload-handler="cropperHandler"
+        />
+
+        <q-btn @click="removeMyImage" class="full-width q-mt-xs" size="sm"
+          >Remove image</q-btn
+        >
 
         <div class="text-subtitle1 q-mt-md q-mb-xs">cartovarc</div>
 
@@ -47,6 +47,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import AvatarCropper from "vue-avatar-cropper";
+import { Loading } from "quasar";
 
 export default {
   computed: {
@@ -55,11 +57,28 @@ export default {
   data() {
     return {
       privateHabits: true,
-      allowFollowers: true
+      allowFollowers: true,
+      labels: { submit: "Submit", cancel: "Cancel" },
+      userAvatar: undefined
     };
   },
   methods: {
-    ...mapActions("profile", ["testGetData"])
+    ...mapActions("profile", ["testGetData", "uploadImage", "removeImage"]),
+    cropperHandler(cropper) {
+      let base64Image = cropper
+        .getCroppedCanvas()
+        .toDataURL(this.cropperOutputMime);
+      this.uploadImage(base64Image);
+    },
+    removeMyImage() {
+      this.removeImage();
+    },
+    showLoading(useless) {
+      Loading.show();
+    }
+  },
+  components: {
+    AvatarCropper
   },
   mounted() {
     this.testGetData();
