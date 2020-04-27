@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import habits from "./store-habits";
 import profile from "./store-profile";
 import auth from "./store-auth";
+import records from "./store-records";
 
 Vue.use(Vuex);
 
@@ -21,7 +22,8 @@ export default function(/* { ssrContext } */) {
     modules: {
       habits,
       profile,
-      auth
+      auth,
+      records
     },
 
     // enable strict mode (adds overhead!)

@@ -49,6 +49,7 @@ const actions = {
         });
         dispatch("habits/fbReadData", null, { root: true });
         dispatch("profile/fbReadData", null, { root: true });
+        dispatch("records/fbReadData", null, { root: true });
       } else {
         commit("habits/clearHabits", null, { root: true });
         commit("habits/setHabitsDownloaded", false, { root: true });

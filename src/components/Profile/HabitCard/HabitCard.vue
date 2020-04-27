@@ -36,40 +36,68 @@
     <q-card-actions>
       <div class="q-gutter-sm flex full-width">
         <q-radio
+          :value="todayRecord"
+          @input="sendScore"
           keep-color
-          v-model="color"
           val="bad"
           label="Bad"
           color="grey"
         />
         <q-radio
+          :value="todayRecord"
+          @input="sendScore"
           keep-color
-          v-model="color"
           val="good"
           label="Good"
           color="green"
         />
         <q-radio
+          :value="todayRecord"
+          @input="sendScore"
           keep-color
-          v-model="color"
           val="excellent"
           label="Excellent"
           color="green-10"
         />
         <q-space />
-        <q-btn>set</q-btn>
       </div>
     </q-card-actions>
   </q-card>
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
-  props: ["name", "id"],
+  props: ["name", "id", "allRecords"],
+  computed: {
+    habitRecords() {
+      return this.allRecords[this.id];
+    },
+    todayRecord() {
+      try {
+        let res = this.habitRecords["04-26-2020"];
+        return res;
+      } catch (error) {
+        console.error(error);
+        return "bad";
+      }
+    }
+  },
   data() {
     return {
-      color: "bad"
+      score: "bad"
     };
+  },
+  methods: {
+    ...mapActions("records", ["updateRecord"]),
+    sendScore(value) {
+      let payload = {
+        habitId: this.id,
+        score: value
+      };
+      this.updateRecord(payload);
+    }
   },
   components: {
     "bar-graph": require("src/components/Profile/HabitCard/BarGraph").default

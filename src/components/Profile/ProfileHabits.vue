@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <template v-if="habitsDownloaded">
+    <template v-if="habitsDownloaded && recordsDownloaded">
       <div
         v-for="(habit, key) in habits"
         v-bind:key="key"
@@ -10,6 +10,8 @@
           @delete="prompToDelete(key)"
           @edit="showEditHabit = true"
           :name="habit.name"
+          :id="key"
+          :allRecords="records"
         />
 
         <q-dialog v-model="showEditHabit">
@@ -37,7 +39,8 @@ import { mapGetters, mapActions, mapState } from "vuex";
 export default {
   computed: {
     ...mapGetters("habits", ["habits"]),
-    ...mapState("habits", ["habitsDownloaded"])
+    ...mapState("habits", ["habitsDownloaded"]),
+    ...mapState("records", ["records", "recordsDownloaded"])
   },
   data() {
     return {
