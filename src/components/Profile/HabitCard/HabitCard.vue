@@ -84,11 +84,6 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      score: "bad"
-    };
-  },
   methods: {
     ...mapActions("records", ["updateRecord"]),
     sendScore(value) {
