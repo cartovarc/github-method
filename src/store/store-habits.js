@@ -73,6 +73,24 @@ const actions = {
     });
   },
 
+  updateHabit({ dispatch }, payload) {
+    dispatch("fbUpdateHabit", payload);
+  },
+
+  fbUpdateHabit({}, payload) {
+    let uid = firebaseAuth.currentUser.uid;
+    let habitRef = firebaseDb.ref("habits/" + uid + "/" + payload.id);
+    habitRef.update(payload.updates, error => {
+      if (error) {
+        showErrorMessage(error.message);
+      } else {
+        let keys = Object.keys(payload.updates);
+        if (!(keys.includes("ignore_atribute_example") && keys.length == 1)) {
+          Notify.create("Habit updated");
+        }
+      }
+    });
+  },
   addHabit({ dispatch }, habit) {
     let id = uid();
     let payload = {

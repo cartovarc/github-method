@@ -18,7 +18,7 @@
           <q-btn color="grey-7" round flat icon="more_vert">
             <q-menu cover auto-close>
               <q-list>
-                <q-item clickable>
+                <q-item clickable @click="$emit('edit')">
                   <q-item-section> Edit </q-item-section>
                 </q-item>
                 <q-item clickable @click="$emit('delete')">
@@ -34,7 +34,7 @@
     <q-separator />
 
     <q-card-actions>
-      <div class="q-gutter-sm">
+      <div class="q-gutter-sm flex full-width">
         <q-radio
           keep-color
           v-model="color"
@@ -56,6 +56,8 @@
           label="Excellent"
           color="green-10"
         />
+        <q-space />
+        <q-btn>set</q-btn>
       </div>
     </q-card-actions>
   </q-card>

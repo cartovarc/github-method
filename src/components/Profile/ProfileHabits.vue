@@ -6,7 +6,15 @@
         v-bind:key="key"
         class="col-12 col-md-6 col-lg-6 q-pl-xs q-pr-xs"
       >
-        <habit-card @delete="prompToDelete(key)" :name="habit.name" />
+        <habit-card
+          @delete="prompToDelete(key)"
+          @edit="showEditHabit = true"
+          :name="habit.name"
+        />
+
+        <q-dialog v-model="showEditHabit">
+          <edit-habit @close="showEditHabit = false" :habit="habit" :id="key" />
+        </q-dialog>
       </div>
 
       <div class="q-pa-lg flex flex-center col-12">
@@ -33,7 +41,8 @@ export default {
   },
   data() {
     return {
-      current: 1
+      current: 1,
+      showEditHabit: false
     };
   },
   methods: {
@@ -53,7 +62,8 @@ export default {
   },
   components: {
     "habit-card": require("src/components/Profile/HabitCard/HabitCard.vue")
-      .default
+      .default,
+    "edit-habit": require("components/Habit/Modals/EditHabit.vue").default
   }
 };
 </script>
