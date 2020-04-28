@@ -62,10 +62,6 @@ const actions = {
     });
     // child changed
     allRecordsRef.on("child_changed", snapshot => {
-      console.log("val");
-      console.log(snapshot.val());
-      console.log("key");
-      console.log(snapshot.key);
       let daysRecords = snapshot.val();
       let payload = {
         id: snapshot.key,
