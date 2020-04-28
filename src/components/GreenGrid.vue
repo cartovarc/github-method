@@ -1,6 +1,10 @@
 <template>
-  <div class="flex flex-center q-pa-none" v-if="habitsDownloaded">
-    <svg class="squares" width="900" height="200">
+  <div
+    ref="greengraph"
+    class="flex flex-center q-pa-none"
+    v-if="habitsDownloaded"
+  >
+    <svg class="squares" width="850" height="200">
       <g v-for="i in 7" v-bind:key="'c' + i">
         <rect
           v-for="j in TOTAL_WEEKS"
@@ -13,6 +17,7 @@
         />
       </g>
     </svg>
+    <q-resize-observer @resize="onResize" />
   </div>
 </template>
 
@@ -105,12 +110,15 @@ export default {
       }
 
       return gray;
+    },
+    onResize(size) {
+      let divWidth = size.width;
+      this.TOTAL_WEEKS = Math.min(
+        parseInt(divWidth / (this.BOX_SIZE + this.BOX_GUTTER)),
+        52
+      );
     }
   }
 };
 </script>
-<style lang="stylus">
-.squares
-  overflow: hidden!important
-  direction: rtl
-</style>
+<style lang="stylus"></style>
