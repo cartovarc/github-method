@@ -61,7 +61,7 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/cartovarc/github-method/issues). You can also take a look at the [contributing guide](https://github.com/cartovarc/github-method/TODO).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/cartovarc/github-method/issues). You can also take a look at the [contributing guide](https://github.com/cartovarc/github-method/blob/master/CONTRIBUTING.md).
 
 ## Show your support
 
