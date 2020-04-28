@@ -98,11 +98,7 @@ export default {
       }
 
       if (totalContributions) {
-        return blend(
-          "#c6e48b",
-          "#196127",
-          normalize(totalContributions, 15, 0)
-        );
+        return blend("#c6e48b", "#196127", normalize(totalContributions, 5, 0));
       }
 
       return gray;

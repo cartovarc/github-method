@@ -5,6 +5,7 @@ import { showErrorMessage } from "src/functions/function-show-error-message";
 
 const state = {
   records: {},
+  todayRecords: {},
   recordsDownloaded: false
 };
 
@@ -13,10 +14,16 @@ const mutations = {
     state.recordsDownloaded = value;
   },
   addRecord(state, payload) {
-    Vue.set(state.records, payload.id, payload.habitRecords);
+    Vue.set(state.records, payload.id, payload.updates);
+  },
+  addTodayRecord(state, payload) {
+    Vue.set(state.todayRecords, payload.id, payload.updates);
   },
   updateRecord(state, payload) {
-    Object.assign(state.records[payload.id], payload.updates);
+    Object.assign(state.records, payload.id, payload.updates);
+  },
+  updateTodayRecord(state, payload) {
+    Object.assign(state.todayRecords, payload);
   }
 };
 
@@ -26,10 +33,14 @@ const actions = {
   },
   fbReadData({ commit }) {
     let uid = firebaseAuth.currentUser.uid;
-    let userRecords = firebaseDb.ref("records/" + uid);
+    let allRecordsRef = firebaseDb.ref("records/" + uid);
+
+    let timeStamp = Date.now();
+    let today = date.formatDate(timeStamp, "DDD-YYYY");
+    let todayRecordsRef = firebaseDb.ref("records/" + uid + "/" + today);
 
     // check initial data
-    userRecords.once(
+    allRecordsRef.once(
       "value",
       snapshot => {
         commit("setRecordsDownloaded", true);
@@ -39,24 +50,42 @@ const actions = {
       }
     );
 
+    // allRecordsRef
     // child added
-    userRecords.on("child_added", snapshot => {
-      let habitRecords = snapshot.val();
+    allRecordsRef.on("child_added", snapshot => {
+      let updates = snapshot.val();
       let payload = {
         id: snapshot.key,
-        habitRecords: habitRecords
+        updates: updates
       };
       commit("addRecord", payload);
     });
-
     // child changed
-    userRecords.on("child_changed", snapshot => {
-      let habitRecords = snapshot.val();
+    allRecordsRef.on("child_changed", snapshot => {
+      let daysRecords = snapshot.val();
       let payload = {
         id: snapshot.key,
-        updates: habitRecords
+        updates: daysRecords
       };
       commit("updateRecord", payload);
+    });
+
+    // todayRecordsRef
+    // child added
+    todayRecordsRef.on("child_added", snapshot => {
+      let updates = snapshot.val();
+      let payload = {
+        id: snapshot.key,
+        updates: updates
+      };
+      commit("addTodayRecord", payload);
+    });
+    // child changed
+    todayRecordsRef.on("child_changed", snapshot => {
+      let updates = snapshot.val();
+      let payload = {};
+      payload[snapshot.key] = updates;
+      commit("updateTodayRecord", payload);
     });
   },
 

@@ -11,7 +11,6 @@
           @edit="showEditHabit = true"
           :name="habit.name"
           :id="key"
-          :allRecords="records"
         />
 
         <q-dialog v-model="showEditHabit">

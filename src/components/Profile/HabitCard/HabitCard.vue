@@ -34,9 +34,9 @@
     <q-separator />
 
     <q-card-actions>
-      <div class="q-gutter-sm flex full-width">
+      <div :key="id" class="q-gutter-sm flex full-width">
         <q-radio
-          :value="todayRecord"
+          :value="habitRecord | processHabitRecord"
           @input="sendScore"
           keep-color
           val="bad"
@@ -44,7 +44,7 @@
           color="grey"
         />
         <q-radio
-          :value="todayRecord"
+          :value="habitRecord | processHabitRecord"
           @input="sendScore"
           keep-color
           val="good"
@@ -52,7 +52,7 @@
           color="green"
         />
         <q-radio
-          :value="todayRecord"
+          :value="habitRecord | processHabitRecord"
           @input="sendScore"
           keep-color
           val="excellent"
@@ -70,19 +70,13 @@ import { mapActions, mapState } from "vuex";
 import { date } from "quasar";
 
 export default {
-  props: ["name", "id", "allRecords"],
+  props: ["name", "id"],
   computed: {
-    todayRecords() {
-      let timeStamp = Date.now();
-      let today = date.formatDate(timeStamp, "DDD-YYYY");
-      return this.allRecords[today];
-    },
-    todayRecord() {
-      try {
-        let res = this.todayRecords[this.id];
-        return res;
-      } catch (error) {
-        console.error(error);
+    ...mapState("records", ["todayRecords"]),
+    habitRecord() {
+      if (this.todayRecords) {
+        return this.todayRecords[this.id];
+      } else {
         return "bad";
       }
     }
@@ -95,6 +89,15 @@ export default {
         score: value
       };
       this.updateRecord(payload);
+    }
+  },
+  filters: {
+    processHabitRecord(value) {
+      if (value) {
+        return value;
+      } else {
+        return "bad";
+      }
     }
   },
   components: {
