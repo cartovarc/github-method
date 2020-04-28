@@ -19,6 +19,10 @@
 - npm >= 6.13.4
 - yarn >= 1.22.4
 
+## Firebase credentials
+
+You need _firebase-config.js_ credentials inside _credentials_ folder. Check \*frebase-config-example.js"
+
 ## Install the dependencies
 
 ```bash
