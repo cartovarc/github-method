@@ -7,12 +7,7 @@
     <q-page-container class="my-container ">
       <div class="row my-container">
         <div class="col-md-3 col-xs-12" style="overflow: auto;">
-          <user-card
-            class="q-ma-md"
-            fullName="Carlos Tovar"
-            username="cartovarc"
-            :imgURL="imageURL"
-          />
+          <user-card class="q-ma-md" :username="username" :imgURL="imageURL" />
         </div>
 
         <div
@@ -54,7 +49,7 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "MainLayout",
   computed: {
-    ...mapState("profile", ["imageURL"]),
+    ...mapState("profile", ["imageURL", "username"]),
     ...mapState("records", ["records", "recordsDownloaded"])
   },
   data() {

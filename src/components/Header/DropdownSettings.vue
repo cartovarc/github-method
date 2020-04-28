@@ -8,12 +8,13 @@
       </div>
     </template>
     <div class="row no-wrap q-pa-md">
+      <!--
       <div class="column">
         <div class="text-h6 q-mb-md">Settings</div>
         <q-toggle v-model="privateHabits" label="Private habits" />
       </div>
-
       <q-separator vertical inset class="q-mx-lg" />
+      -->
 
       <div class="column items-center">
         <q-avatar size="96px">
@@ -36,7 +37,7 @@
           >Remove image</q-btn
         >
 
-        <div class="text-subtitle1 q-mt-md q-mb-xs">cartovarc</div>
+        <div class="text-subtitle1 q-mt-md q-mb-xs">{{ username }}</div>
 
         <q-btn
           @click="logout"
@@ -58,7 +59,7 @@ import { Loading } from "quasar";
 
 export default {
   computed: {
-    ...mapState("profile", ["imageURL"])
+    ...mapState("profile", ["imageURL", "username"])
   },
   data() {
     return {

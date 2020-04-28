@@ -5,6 +5,7 @@ import { showErrorMessage } from "src/functions/function-show-error-message";
 
 const state = {
   habits: {},
+  totalHabits: 0,
   habitsDownloaded: false
 };
 
@@ -14,12 +15,14 @@ const mutations = {
   },
   addHabit(state, payload) {
     Vue.set(state.habits, payload.id, payload.habit);
+    state.totalHabits = state.totalHabits + 1;
   },
   updateHabit(state, payload) {
     Object.assign(state.habits[payload.id], payload.updates);
   },
   deleteHabit(state, id) {
     Vue.delete(state.habits, id);
+    state.totalHabits = state.totalHabits - 1;
   },
   clearHabits(state) {
     state.habits = {};

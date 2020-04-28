@@ -2,6 +2,8 @@ import { firebaseAuth } from "boot/firebase";
 import { Loading, LocalStorage } from "quasar";
 import { showErrorMessage } from "src/functions/function-show-error-message";
 
+let UsernameGenerator = require("username-generator");
+
 const state = {
   loggedIn: false
 };
@@ -13,12 +15,19 @@ const mutations = {
 };
 
 const actions = {
-  registerUser({}, payload) {
+  registerUser({ dispatch }, payload) {
     Loading.show();
     firebaseAuth
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
-        //console.log("Response: ", response);
+        dispatch(
+          "profile/updateUsername",
+          {
+            uid: response.user.uid,
+            updates: { username: UsernameGenerator.generateUsername() }
+          },
+          { root: true }
+        );
       })
       .catch(error => {
         showErrorMessage(error.message);

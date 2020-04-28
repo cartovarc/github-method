@@ -3,10 +3,9 @@
     <q-card v-if="$q.screen.gt.sm" flat bordered class="my-card-one q-ma-none">
       <q-img :src="getImgURL()" :ratio="1" />
       <q-card-section>
-        <div class="text-h6">{{ fullName }}</div>
-        <div class="text-subtitle2">{{ username }}</div>
+        <div class="text-h6">{{ username }}</div>
       </q-card-section>
-
+      <!--
       <q-card-section class="q-pt-none">
         <q-btn
           class="full-width"
@@ -15,15 +14,17 @@
           label="Follow"
         />
       </q-card-section>
+      -->
     </q-card>
 
     <q-card v-else class="my-card-two" flat bordered>
       <q-card-section horizontal>
         <q-img class="my-image-two" :src="getImgURL()" :ratio="1" />
         <q-card-section>
-          <div class="text-h6">{{ fullName }}</div>
-          <div class="text-subtitle2 q-mb-md">{{ username }}</div>
+          <div class="text-h6">{{ username }}</div>
+          <!--
           <q-btn color="white" text-color="black" label="Follow" />
+          -->
         </q-card-section>
       </q-card-section>
     </q-card>
@@ -32,7 +33,7 @@
 
 <script>
 export default {
-  props: ["fullName", "username", "imgURL"],
+  props: ["username", "imgURL"],
   methods: {
     getImgURL() {
       if (this.imgURL) {

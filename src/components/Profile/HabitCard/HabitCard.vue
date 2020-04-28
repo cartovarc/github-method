@@ -10,7 +10,7 @@
         </div>
 
         <div class="col-4 text-right">
-          <bar-graph />
+          <bar-graph :habitRecord="habitRecord" />
         </div>
 
         <div class="col-1">

@@ -18,10 +18,15 @@
         </q-dialog>
       </div>
 
+      <div v-if="totalHabits == 0" class="col-12 q-mb-md">
+        <no-habits />
+      </div>
+
+      <!--
       <div class="q-pa-lg flex flex-center col-12">
         <q-pagination color="primary" v-model="current" :max="5">
         </q-pagination>
-      </div>
+      </div> -->
     </template>
 
     <template v-else>
@@ -38,7 +43,7 @@ import { mapGetters, mapActions, mapState } from "vuex";
 export default {
   computed: {
     ...mapGetters("habits", ["habits"]),
-    ...mapState("habits", ["habitsDownloaded"]),
+    ...mapState("habits", ["habitsDownloaded", "totalHabits"]),
     ...mapState("records", ["records", "recordsDownloaded"])
   },
   data() {
@@ -65,7 +70,8 @@ export default {
   components: {
     "habit-card": require("src/components/Profile/HabitCard/HabitCard.vue")
       .default,
-    "edit-habit": require("components/Habit/Modals/EditHabit.vue").default
+    "edit-habit": require("components/Habit/Modals/EditHabit.vue").default,
+    "no-habits": require("components/Habit/NoHabits.vue").default
   }
 };
 </script>
