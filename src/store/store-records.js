@@ -20,7 +20,7 @@ const mutations = {
     Vue.set(state.todayRecords, payload.id, payload.updates);
   },
   updateRecord(state, payload) {
-    Object.assign(state.records, payload.id, payload.updates);
+    Object.assign(state.records[payload.id], payload.updates);
   },
   updateTodayRecord(state, payload) {
     Object.assign(state.todayRecords, payload);
@@ -62,6 +62,10 @@ const actions = {
     });
     // child changed
     allRecordsRef.on("child_changed", snapshot => {
+      console.log("val");
+      console.log(snapshot.val());
+      console.log("key");
+      console.log(snapshot.key);
       let daysRecords = snapshot.val();
       let payload = {
         id: snapshot.key,

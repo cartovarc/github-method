@@ -29,9 +29,12 @@ const green_two = "#7bc96f";
 const green_three = "#196127";
 
 export default {
-  props: ["allRecords"],
   computed: {
-    ...mapState("habits", ["habitsDownloaded"])
+    ...mapState("habits", ["habitsDownloaded"]),
+    ...mapState("records", ["records", "todayRecords"]),
+    allRecords() {
+      return Object.assign({}, this.records, this.todayRecords);
+    }
   },
   data() {
     return {

@@ -40,7 +40,7 @@
 
           <q-separator class="q-mb-md" />
 
-          <green-grid style="max-width: 100% " :allRecords="records" />
+          <green-grid style="max-width: 100%" />
         </div>
       </div>
     </q-page-container>
