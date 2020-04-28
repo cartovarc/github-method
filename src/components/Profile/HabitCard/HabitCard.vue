@@ -67,16 +67,19 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { date } from "quasar";
 
 export default {
   props: ["name", "id", "allRecords"],
   computed: {
-    habitRecords() {
-      return this.allRecords[this.id];
+    todayRecords() {
+      let timeStamp = Date.now();
+      let today = date.formatDate(timeStamp, "DDD-YYYY");
+      return this.allRecords[today];
     },
     todayRecord() {
       try {
-        let res = this.habitRecords["04-26-2020"];
+        let res = this.todayRecords[this.id];
         return res;
       } catch (error) {
         console.error(error);

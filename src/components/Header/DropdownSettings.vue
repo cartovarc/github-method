@@ -11,7 +11,6 @@
       <div class="column">
         <div class="text-h6 q-mb-md">Settings</div>
         <q-toggle v-model="privateHabits" label="Private habits" />
-        <q-toggle v-model="allowFollowers" label="Allow followers" />
       </div>
 
       <q-separator vertical inset class="q-mx-lg" />

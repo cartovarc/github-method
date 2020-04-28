@@ -40,7 +40,7 @@
 
           <q-separator class="q-mb-md" />
 
-          <green-grid style="max-width: 100% " />
+          <green-grid style="max-width: 100% " :allRecords="records" />
         </div>
       </div>
     </q-page-container>
@@ -54,7 +54,8 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "MainLayout",
   computed: {
-    ...mapState("profile", ["imageURL"])
+    ...mapState("profile", ["imageURL"]),
+    ...mapState("records", ["records", "recordsDownloaded"])
   },
   data() {
     return {

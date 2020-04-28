@@ -1,15 +1,15 @@
 <template>
   <div class="flex flex-center q-pa-none" v-if="habitsDownloaded">
     <svg class="squares" width="900" height="200">
-      <g v-for="j in 7" v-bind:key="'c' + j">
+      <g v-for="i in 7" v-bind:key="'c' + i">
         <rect
-          v-for="i in 54"
-          v-bind:key="i"
-          :x="(i - 1) * 20 + 1"
-          :y="(j - 1) * 20 + 1"
-          width="15"
-          height="15"
-          :style="'fill:' + randomColor() + ';opacity:1'"
+          v-for="j in TOTAL_WEEKS"
+          v-bind:key="j"
+          :x="(j - 1) * (BOX_SIZE + BOX_GUTTER) + 1"
+          :y="(i - 1) * (BOX_SIZE + BOX_GUTTER) + 1"
+          :width="BOX_SIZE"
+          :height="BOX_SIZE"
+          :style="'fill:' + getColor(i - 1, j - 1) + ';opacity:1'"
         />
       </g>
     </svg>
@@ -18,23 +18,94 @@
 
 <script>
 import { mapState } from "vuex";
+import { date } from "quasar";
+import { blend } from "src/functions/function-blend-colors.js";
+import { normalize } from "src/functions/function-normalize.js";
+
+const gray = "#ebedf0";
+const white = "#ffffff";
+const green_one = "#c6e48b";
+const green_two = "#7bc96f";
+const green_three = "#196127";
 
 export default {
+  props: ["allRecords"],
   computed: {
     ...mapState("habits", ["habitsDownloaded"])
   },
+  data() {
+    return {
+      TOTAL_WEEKS: 52,
+      BOX_SIZE: 13, //px
+      BOX_GUTTER: 3 //px
+    };
+  },
   methods: {
-    randomColor() {
-      const level = Math.floor(Math.random() * 4);
-      if (level == 0) {
-        return "#c6e48b";
-      } else if (level == 1) {
-        return "#7bc96f";
-      } else if (level == 2) {
-        return "#196127";
-      } else {
-        return "#ebedf0";
+    // i, j -> DDD-YYYY
+    getDateFromCoords(i, j) {
+      let jToday = parseInt(this.TOTAL_WEEKS) - 1;
+      let timeStamp = Date.now();
+      let iToday = parseInt(date.formatDate(timeStamp, "d"));
+      let todayDayOfYear = parseInt(date.formatDate(timeStamp, "DDD"));
+      let todayYear = parseInt(date.formatDate(timeStamp, "YYYY"));
+
+      let intermediateColums = 0;
+      if (jToday !== j && Math.abs(jToday - j) !== 1) {
+        intermediateColums = jToday - j - 1;
       }
+
+      let sameColum = jToday === j;
+      let distance = 0;
+
+      if (sameColum) {
+        distance = iToday - i;
+      } else {
+        distance = intermediateColums * 7 + iToday + (7 - i + 1);
+      }
+
+      let DDDij = todayDayOfYear - distance;
+      let ijYear = todayYear;
+      if (distance > todayDayOfYear) {
+        ijYear = ijYear - 1;
+        DDDij = DDDij + 365;
+      }
+      return DDDij + "-" + ijYear;
+    },
+
+    getColor(i, j) {
+      let timeStamp = Date.now();
+      let currentYear = parseInt(date.formatDate(timeStamp, "Y"));
+      let jToday = parseInt(this.TOTAL_WEEKS) - 1;
+      let iToday = parseInt(date.formatDate(timeStamp, "d"));
+
+      // white in future days
+      if (i > iToday && j == jToday) {
+        return white;
+      }
+
+      let DDDYYYY = this.getDateFromCoords(i, j);
+
+      let habitsScores = this.allRecords[DDDYYYY];
+
+      let totalContributions = 0;
+
+      if (habitsScores) {
+        for (let [key, score] of Object.entries(habitsScores)) {
+          if (score === "good" || score === "excellent") {
+            totalContributions++;
+          }
+        }
+      }
+
+      if (totalContributions) {
+        return blend(
+          "#c6e48b",
+          "#196127",
+          normalize(totalContributions, 15, 0)
+        );
+      }
+
+      return gray;
     }
   }
 };

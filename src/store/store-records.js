@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { uid, Notify } from "quasar";
+import { date, Notify } from "quasar";
 import { firebaseDb, firebaseAuth } from "boot/firebase";
 import { showErrorMessage } from "src/functions/function-show-error-message";
 
@@ -67,8 +67,12 @@ const actions = {
   fbUpdateRecord({}, payload) {
     let uid = firebaseAuth.currentUser.uid;
     let score = payload.score;
-    let recordRef = firebaseDb.ref("records/" + uid + "/" + payload.habitId);
-    recordRef.update({ "04-26-2020": score }, error => {
+    let timeStamp = Date.now();
+    let today = date.formatDate(timeStamp, "DDD-YYYY");
+    let recordRef = firebaseDb.ref("records/" + uid + "/" + today);
+    let aux = {};
+    aux[payload.habitId] = score;
+    recordRef.update(aux, error => {
       if (error) {
         showErrorMessage(error.message);
       } else {
