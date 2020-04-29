@@ -76,17 +76,16 @@ const actions = {
     });
   },
   updateUsername({ dispatch }, payload) {
-    console.log(payload);
     dispatch("fbUpdateUsername", payload);
   },
   fbUpdateUsername({}, payload) {
-    let uid = payload.uid;
+    let uid = firebaseAuth.currentUser.uid;
     let profileRef = firebaseDb.ref("profile/" + uid + "/");
     profileRef.update(payload.updates, error => {
       if (error) {
         showErrorMessage(error.message);
       } else {
-        // Notify.create("Image updated");
+        Notify.create("Username asigned to " + payload.updates.username);
       }
     });
   }

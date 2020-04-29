@@ -23,7 +23,6 @@ const actions = {
         dispatch(
           "profile/updateUsername",
           {
-            uid: response.user.uid,
             updates: { username: UsernameGenerator.generateUsername() }
           },
           { root: true }

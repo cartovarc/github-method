@@ -8,23 +8,16 @@
       </div>
     </template>
     <div class="row no-wrap q-pa-md">
-      <!--
-      <div class="column">
-        <div class="text-h6 q-mb-md">Settings</div>
-        <q-toggle v-model="privateHabits" label="Private habits" />
-      </div>
-      <q-separator vertical inset class="q-mx-lg" />
-      -->
-
       <div class="column items-center">
+        <div class="text-h6">Settings</div>
+
         <q-avatar size="96px">
           <img :src="getImgURL()" />
         </q-avatar>
-
-        <q-btn class="full-width q-mt-xs" size="sm" id="pick-avatar"
-          >Select an image</q-btn
-        >
-
+        <div class="text-subtitle1 q-mt q-mb-xs">{{ username }}</div>
+      </div>
+      <q-separator vertical inset class="q-mx-lg" />
+      <div class="column flex flex-center">
         <img v-if="userAvatar" :src="userAvatar" />
         <avatar-cropper
           trigger="#pick-avatar"
@@ -32,15 +25,30 @@
           @submit="showLoading"
           :upload-handler="cropperHandler"
         />
+        <q-btn class="full-width q-mt-xs" size="sm" id="pick-avatar"
+          >Select an image</q-btn
+        >
 
         <q-btn @click="removeMyImage" class="full-width q-mt-xs" size="sm"
           >Remove image</q-btn
         >
 
-        <div class="text-subtitle1 q-mt-md q-mb-xs">{{ username }}</div>
+        <username-dialog
+          :username="username"
+          :prompt="promptUsernameDialog"
+          @hide="promptUsernameDialog = false"
+          v-close-popup
+        />
+        <q-btn
+          @click="promptUsernameDialog = true"
+          class="full-width q-mt-xs"
+          size="sm"
+          >Change username</q-btn
+        >
 
         <q-btn
           @click="logout"
+          class="full-width  q-mt-xs"
           color="primary"
           label="Logout"
           push
@@ -63,8 +71,7 @@ export default {
   },
   data() {
     return {
-      privateHabits: true,
-      allowFollowers: true,
+      promptUsernameDialog: false,
       labels: { submit: "Submit", cancel: "Cancel" },
       userAvatar: undefined
     };
@@ -96,7 +103,8 @@ export default {
     }
   },
   components: {
-    AvatarCropper
+    AvatarCropper,
+    "username-dialog": require("src/components/Profile/UsernameDialog").default
   }
 };
 </script>
