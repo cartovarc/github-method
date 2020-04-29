@@ -1,9 +1,9 @@
 <h1 align="center">Welcome to github-method 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
-  <img src="https://img.shields.io/badge/node-%3E%3D%2010.18.1-blue.svg" />
+  <img src="https://img.shields.io/badge/node-%3E%3D%2012.16.1-blue.svg" />
   <img src="https://img.shields.io/badge/npm-%3E%3D%206.13.4-blue.svg" />
-  <img src="https://img.shields.io/badge/yarn-%3E%3D%201.21.1-blue.svg" />
+  <img src="https://img.shields.io/badge/yarn-%3E%3D%201.22.4-blue.svg" />
   <a href="https://www.mit.edu/~amini/LICENSE.md" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
@@ -21,7 +21,7 @@
 
 ## Firebase credentials
 
-You need _firebase-config.js_ credentials inside _credentials_ folder. Check \*frebase-config-example.js"
+You need _firebase-config.js_ credentials inside _credentials_ folder. Check *firebase-config-example.js*
 
 ## Install the dependencies
 
